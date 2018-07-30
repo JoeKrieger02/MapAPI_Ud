@@ -16,19 +16,36 @@ html,
       }
 
       h1 {
-        color: #525454;
+        /*color: #efefef;*/
+        color: #1f2833;
         font-size: 22px;
         margin: 0 0 10px 0;
         text-align: center;
+        cursor: default;
+        padding-bottom: 0.5em;
       }
 
-      #hide-listings,
-      #show-listings {
-        width: 48%;
+      .title-box{
+        /*background-color: #444444;*/
+        background-color: #45a29e;
+        margin-left: -1em;
+        margin-right: -1em;
+        margin-top: -1em;
+        padding-top: 1em;
       }
+
+      p{
+        font-family: 'Roboto', arial, sans-serif;
+        font-weight: 500;
+        font-size: 1.2em;
+        cursor: default;
+        color: white;
+        margin-bottom: -0.3em;
+      }
+
 
       hr {
-        background: #D0D7D9;
+        background: black;
         height: 1px;
         margin: 20px 0 20px 0;
         border: none;
@@ -43,8 +60,9 @@ html,
       }
 
       .options-box {
-        background: #fff;
-        border: 1px solid #999;
+        /*background: #e0dede;*/
+        background: #1f2833;
+        border: 1px solid #1f2833;
         border-radius: 3px;
         height: 100%;
         line-height: 35px;
@@ -61,22 +79,119 @@ html,
       #places-search,
       #search-within-time-text {
         width: 84%;
+        height: 1.5em;
       }
 
       .text {
         font-size: 12px;
+        cursor: default;
+        color: white;
       }
 
       #toggle-drawing {
         width: 27%;
         position: relative;
         margin-left: 10px;
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 0.41em 0em;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 0.8em;
+      }
+      #toggle-drawing:hover{
+      background-color: #0b890b;
+      cursor: pointer;
       }
 
       #zoom-to-area-text {
         width: 70%;
+        height: 1.5em;
+
+      }
+      #zoom-to-area {
+        width: 27%;
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 0.3em 0em;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1em;
+      }
+      #zoom-to-area:hover{
+    background-color: #0b890b;
+    cursor: pointer;
       }
 
-      #zoom-to-area {
-        width: 24%;
+      #go-places{
+        width: 10%;
+        position: relative;
+        margin-left: 10px;
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 0.41em 0em;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 0.8em;
+      }
+
+      #go-places:hover{
+        background-color: #0b890b;
+        cursor: pointer;
+      }
+
+      #search-within-time{
+        width: 10%;
+        position: relative;
+        margin-left: 10px;
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 0.41em 0em;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 0.8em;
+      }
+
+      #search-within-time:hover{
+        background-color: #0b890b;
+        cursor: pointer;
+      }
+
+      #hide-listings,
+      #show-listings {
+        width: 48%;
+        position: relative;
+         /* Green */
+        border: none;
+        color: white;
+        padding: 0.41em 0em;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 0.8em;
+      }
+
+      #show-listings{
+        background-color: #4CAF50;
+      }
+      #hide-listings{
+        background-color: #c64025;
+      }
+
+      #show-listings:hover{
+        background-color: #0b890b;
+        cursor: pointer;
+      }
+
+      #hide-listings:hover{
+        background-color: #961f07;
+        cursor: pointer;
       }
