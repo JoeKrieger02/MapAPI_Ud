@@ -9,17 +9,41 @@
     <script src="js/app.js"></script>
   </head>
 <body>
-  <div class="container">
-    <div class="options-box">
-      <div class="title-box">
-      <h1> Krieger MAPS</h1>
+  <div class="title-container">
+    <div class="hamburger-box">
+<button class="hamburger-button" onClick="showMenu()"><img src="img/Hamburger.svg" /> </button>
     </div>
+    <script>
+
+    function showMenu(){
+
+      var x = document.getElementById("options-box");
+      if(x.style.display === "none") {
+        x.style.display = "inline-block"
+      } else {
+        x.style.display = "none";
+      }
+    }
+    </script>
+
+  <div class="title-box">
+<h1> Krieger MAPS</h1>
+</div>
+<div class="search-box">
+  <input id="zoom-to-area-text" type="text" placeholder=" Enter a location" >
+  <input id="zoom-to-area" type="button" value="Search">
+</div>
+
+</div>
+  <div class="container">
+    <div id="options-box">
+<!--
     <div>
       <p>Search for locations</p>
       <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!" >
       <input id="zoom-to-area" type="button" value="Zoom">
     </div>
-    <hr>
+    <hr> -->
     <div>
       <p>Search for services or monuments</p>
       <input id="places-search" type="text" placeholder="Ex: Pizza delivery in NYC">
