@@ -21,13 +21,17 @@
       var y = document.getElementById("map");
       if(x.style.display === "none") {
         x.style.display = "inline-block";
-        
-
-
-
       } else {
         x.style.display = "none";
+      }
+    }
 
+    function hideMenu(){
+
+      var x = document.getElementById("options-box");
+      
+      if(x.style.display === "inline-block") {
+        x.style.display = "none";
       }
     }
     </script>
@@ -89,7 +93,7 @@
         <h2 id="krieger"> Krieger MAPS</h2>
 
     </div>
-    <div id="map"></div>
+    <div id="map" onClick="hideMenu()"></div>
   </div>
   <script async defer
           src=
