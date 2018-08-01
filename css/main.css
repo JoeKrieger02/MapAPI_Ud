@@ -291,9 +291,40 @@ padding-left: 1em;
         }
       }
 
-      @media screen and (max-width: 1159px) {
+      @media screen and (min-width: 481px) and (max-width: 1024px) {
 
+h1{
+      font-size: 1em;
+
+}
         #zoom-to-area {
-          width: 10%;
+
+width: 16%;
         }
+
+        .title-container{
+          width: 100%;
+          height: 7%;
+
+
+        }
+        .title-box{
+          width:5%;
+
+        }
+
+        .search-box{
+display: inline-block;
+          width: 100%;
+        }
+        .hamburger-box{
+          width: 10%;
+
+        }
+          .hamburger-button{
+min-width: 48px;
+
+
+        }
+
       }
