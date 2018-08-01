@@ -87,8 +87,8 @@ var map;
 
         // Constructor creates a new map - only center and zoom are required.
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 40.7413549, lng: -73.9980244},
-          zoom: 13,
+          center: {lat: 50.585499, lng: 5.988555},
+          zoom: 12,
           styles: styles,
           mapTypeControl: false
         });
@@ -110,12 +110,12 @@ var map;
         // These are the real estate listings that will be shown to the user.
         // Normally we'd have these in a database instead.
         var locations = [
-          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+          {title: 'Lac de la Gileppe', location: {lat: 50.589357, lng: 5.974609}},
+          {title: 'Parc naturel Hautes Fagnes - Eifel', location: {lat: 50.569816, lng: 6.091064}},
+          {title: 'Cimetière américain de Henri-Chapelle', location: {lat: 50.697335, lng: 5.900831}},
+          {title: 'Lac de Robertvile', location: {lat: 50.447490, lng: 6.122903}},
+          {title: 'Wesertalsperre', location: {lat: 50.6189468, lng: 6.0908503}},
+          {title: 'A plane near Spa aerodrome', location: {lat: 50.4792976, lng: 5.9067213}}
         ];
 
         var largeInfowindow = new google.maps.InfoWindow();
@@ -246,7 +246,7 @@ var map;
                   position: nearStreetViewLocation,
                   pov: {
                     heading: heading,
-                    pitch: 30
+                    pitch: 20
                   }
                 };
               var panorama = new google.maps.StreetViewPanorama(
