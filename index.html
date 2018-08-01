@@ -18,10 +18,15 @@
     function showMenu(){
 
       var x = document.getElementById("options-box");
+      var y = document.getElementById("map");
       if(x.style.display === "none") {
         x.style.display = "inline-block"
+          
+
+
       } else {
         x.style.display = "none";
+
       }
     }
     </script>
@@ -36,7 +41,7 @@
 
 </div>
   <div class="container">
-    <div id="options-box">
+    <div id="options-box" style="display: none;">
 <!--
     <div>
       <p>Search for locations</p>

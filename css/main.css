@@ -4,6 +4,7 @@ html,
         height: 100%;
         margin: 0;
         padding: 0;
+        overflow: hidden;
       }
 
       .container {
@@ -27,6 +28,13 @@ html,
         padding-top: 0.5em;
 
       }
+/*Remove default highlight on clickable elements*/
+      input:focus,
+      select:focus,
+      textarea:focus,
+      button:focus {
+          outline: none;
+      }
 
 .title-container{
 display: flex;
@@ -41,6 +49,41 @@ width: 30%;
 
 .search-box{
   width:70%;
+  padding-top: 0em;
+}
+
+#zoom-to-area-text {
+  width: 40%;
+  height: 2em;
+  margin-top: 0.8em;
+margin-left: 10em;
+background-color: #1f2833;
+border-color: #7FDBFF;
+border-radius: 25px;
+border-style: solid;
+color: white;
+padding-left: 1em;
+
+}
+
+#zoom-to-area-text:hover{
+  border-color: #00ffff;
+}
+
+#zoom-to-area {
+  width: 8%;
+  background-color: #01FF70;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  line-height: 1.8em;
+
+  padding-right: 0.5em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+
 }
 
 .hamburger-box{
@@ -59,9 +102,13 @@ width: 30%;
 .hamburger-button:hover{
   background-color: #2ECC40;
   cursor: pointer;
-  height:90%;
+}
+
+.hamburger-button:active{
+  background-color: white;
 
 }
+
       p{
         font-family: 'Roboto', arial, sans-serif;
         font-weight: 500;
@@ -80,24 +127,27 @@ width: 30%;
       }
 
       #map {
-        bottom:0px;
+
         height: 95%;
-        /*left: 362px;*/
         /*position: absolute;*/
-        /*right: 0px;*/
+        right: 0px;
         position: fixed;
+        width: auto;
+
       }
 
       #options-box {
         /*background: #e0dede;*/
         background: #1f2833;
         border: 1px solid #1f2833;
-        height: 100%;
+        height: 60%;
         line-height: 35px;
         padding: 0px 10px 30px 10px;
         text-align: left;
-        width: 340px;
+        width: 25%;
+        position: absolute;
         display: none;
+        z-index: 999;
       }
 
       #pano {
@@ -136,35 +186,6 @@ width: 30%;
       }
 
 
-      #zoom-to-area-text {
-        width: 40%;
-        height: 1.5em;
-        margin-top: 0.8em;
-      margin-left: 10em;
-      background-color: #1f2833;
-      border-color: #7FDBFF;
-      border-radius: 25px;
-      border-style: solid;
-      color: white;
-      padding-left: 1em;
-      }
-
-      #zoom-to-area {
-        width: 8%;
-        background-color: #01FF70;
-        border: none;
-        border-radius: 25px;
-        color: white;
-        line-height: 1.2em;
-        padding-top: 0.02em;
-        padding-bottom: 0.3em;
-        padding-right: 0.5em;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 1em;
-
-      }
 
 /*
       #zoom-to-area-text {
@@ -259,4 +280,20 @@ width: 30%;
       #hide-listings:hover{
         background-color: #961f07;
         cursor: pointer;
+      }
+
+      /*MEDIA QUERIES*/
+
+      @media screen and (max-width: 1159px) {
+
+        #zoom-to-area {
+          width: 10%;
+        }
+      }
+
+      @media screen and (max-width: 1159px) {
+
+        #zoom-to-area {
+          width: 10%;
+        }
       }
