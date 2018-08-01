@@ -288,18 +288,20 @@ hr {
 
 /*MEDIA QUERIES*/
 
+/* SMALLER SCREENS*/
 @media screen and (max-width: 1159px) {
 	#zoom-to-area {
 		width: 10%;
 	}
-}
+
 
 #options-box {
 	width: 30%;
 	height: 70%;
 	/*line-height: 35px;*/
 }
-
+}
+/* TABLETS */
 @media screen and (min-width: 481px) and (max-width: 1024px) {
 	h1 {
 		font-size: 1em;
@@ -331,6 +333,7 @@ hr {
 	}
 }
 
+/* SMARTPHONES*/
 @media screen and (max-width: 480px) {
   #krieger {
   	display: inline-block;
@@ -345,7 +348,7 @@ hr {
 	}
 	.title-container {
 		width: 100%;
-		height: 8%;
+		height: 7.4%;
 	}
 	.title-box {
 		display: none;
@@ -368,4 +371,21 @@ hr {
 		text-align: center;
 		width: 96%;
 	}
+  #krieger {
+  	display: inline-block;
+    color:white;
+    font-size: 2em;
+  }
+}
+
+/* SMALL SMARTHONES */
+@media screen and (max-width: 325px) {
+	.title-container {
+		width: 100%;
+		height: 8.8%;
+	}
+  #krieger {
+
+    font-size: 1em;
+  }
 }
