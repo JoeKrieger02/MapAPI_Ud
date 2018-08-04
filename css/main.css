@@ -138,10 +138,11 @@ li{
 	width: 100%;
 	color:white;
 	background-color: #303849;
-	margin-bottom: 1em;
 	margin-left: -0.5em;
-	padding-right:  0.8em;
+	margin-bottom: 1em;
+	padding-right: 0.8em;
 	padding-left: 1em;
+
 	transition: 0.5s;
 	cursor: pointer;
 }

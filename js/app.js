@@ -4,7 +4,7 @@ var map;
       var markers = [];
 
 
-
+      //var polygon = null;
 
 
       var placeMarkers = [];
@@ -98,11 +98,6 @@ var map;
 
         zoomAutocomplete.bindTo('bounds', map);
 
-        var searchBox = new google.maps.places.SearchBox(
-            document.getElementById('places-search'));
-
-        searchBox.setBounds(map.getBounds());
-
 
         var locations = [
           {title: 'Lac de la Gileppe', location: {lat: 50.589357, lng: 5.974609}},
@@ -110,7 +105,7 @@ var map;
           {title: 'Cimetière américain de Henri-Chapelle', location: {lat: 50.697335, lng: 5.900831}},
           {title: 'Lac de Robertvile', location: {lat: 50.447490, lng: 6.122903}},
           {title: 'Wesertalsperre', location: {lat: 50.6189468, lng: 6.0908503}},
-          {title: 'A plane near Spa aerodrome', location: {lat: 50.4792976, lng: 5.9067213}}
+          {title: 'Spa aerodrome', location: {lat: 50.4792976, lng: 5.9067213}}
         ];
 
         var largeInfowindow = new google.maps.InfoWindow();
@@ -157,26 +152,52 @@ var map;
           zoomToArea();
         });
 
-
-        searchBox.addListener('places_changed', function() {
-          searchBoxPlaces(this);
-        });
-
         //TEST
-        var l1Active = false;
 
+      //var one = 1;
              document.getElementById('l1').addEventListener('click', showOne);
+             document.getElementById('l2').addEventListener('click', showOne);
+             document.getElementById('l3').addEventListener('click', showOne);
+             document.getElementById('l4').addEventListener('click', showOne);
+             document.getElementById('l5').addEventListener('click', showOne);
+             document.getElementById('l6').addEventListener('click', showOne);
+
               function showOne() {
-                if (!l1Active) {
+
+
+                  if (event.target.id === 'l1'){
+                    var index=0;
+
+                  } else if (event.target.id === 'l2'){
+                    var index=1;
+
+                  } else if (event.target.id === 'l3'){
+                    var index=2;
+
+                  } else if (event.target.id === 'l4'){
+                    var index=3;
+
+                  } else if (event.target.id === 'l5'){
+                    var index=4;
+
+                  } else if (event.target.id === 'l6'){
+                    var index=5;
+
+                  }
+
+
+
+
+
+                var end = index+1;
                 var oldMarkers = markers;
                 markers = [];
 
 
-                console.log("into click");
-                for (var i = 0; i < 1; i++) {
-                  console.log("into loop");
-                  var position = locations[i].location;
-                  var title = locations[i].title;
+                  while(index < end){
+
+                  var position = locations[index].location;
+                  var title = locations[index].title;
 
                   var marker = new google.maps.Marker({
 
@@ -186,19 +207,32 @@ var map;
                     icon: defaultIcon,
                     id: i
                   });
-
                   markers.push(marker);
-                  console.log("after marker");
 
-              }
-              showListings();
+                  index++
+                  document.getElementById(event.target.id).removeEventListener("click", showOne);
+                }
+                //showListings();
+                var bounds = new google.maps.LatLngBounds();
+
+                for (var i = 0; i < markers.length; i++) {
+                  markers[i].setMap(map);
+                  bounds.extend(markers[i].position);
+                }
+                // Don't zoom in too far on only one marker from StackOverflow (https://stackoverflow.com/questions/3334729/google-maps-v3-fitbounds-zoom-too-close-for-single-marker)
+                if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
+                  var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
+                  var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
+                  bounds.extend(extendPoint1);
+                  bounds.extend(extendPoint2);
+                }
+                map.fitBounds(bounds);
+              //
               markers = oldMarkers;
               l1Active = true;
-            } else {
-              markers[1].setMap(null);
-              l1Active = false;
-            }
-            }
+              }
+
+
         //TEST
 
       }
@@ -246,9 +280,10 @@ var map;
         }
       }
 
+
       function showListings() {
         var bounds = new google.maps.LatLngBounds();
-        console.log("into listings");
+
         for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(map);
           bounds.extend(markers[i].position);
