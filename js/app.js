@@ -153,7 +153,7 @@ var map;
         });
 
         //TEST
-
+        var currentMarkers;
       //var one = 1;
              document.getElementById('l1').addEventListener('click', showOne);
              document.getElementById('l2').addEventListener('click', showOne);
@@ -228,6 +228,9 @@ var map;
                 }
                 map.fitBounds(bounds);
               //
+
+              currentMarkers.push(markers)
+
               markers = oldMarkers;
               l1Active = true;
               }
@@ -295,6 +298,7 @@ var map;
       function hideMarkers(markers) {
         for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(null);
+          currentMarkers[i].setMap(null);
         }
       }
 
