@@ -437,6 +437,17 @@ li:hover{
     color:white;
     font-size: 2em;
   }
+	.toggle{
+		margin-left: 14em;
+
+	}
+
+	.show{
+
+	}
+	.list{
+		text-align: left;
+	}
 }
 
 /* SMALL SMARTHONES */
