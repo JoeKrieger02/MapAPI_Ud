@@ -130,7 +130,7 @@ hr {
 .list{
 margin-left: -2em;
 width: 100%;
-
+margin-right: -2em;
 }
 
 li{
@@ -142,14 +142,47 @@ li{
 	margin-bottom: 1em;
 	padding-right: 0.8em;
 	padding-left: 1em;
-
+	height:38px;
 	transition: 0.5s;
-	cursor: pointer;
+	cursor: default;
 }
 
 li:hover{
 	background-color: #485570;
 	transition: 0.5s;
+}
+
+.toggle{
+	margin-left: 14.7em;
+	position: absolute;
+}
+
+.hide, .show{
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	height: 3em;
+	max-height:38px;
+	cursor: pointer;
+}
+.show {
+	background-color: #4CAF50;
+}
+
+.hide {
+	background-color: #c64025;
+}
+
+.show:hover {
+	background-color: #0b890b;
+	cursor: pointer;
+}
+
+.hide:hover {
+	background-color: #961f07;
+	cursor: pointer;
 }
 
 
