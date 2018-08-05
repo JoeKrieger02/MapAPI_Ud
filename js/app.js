@@ -193,10 +193,8 @@ function initMap() {
       markers.push(marker)
       //currentMarkers.push(markers);
       index++
-      document
-        .getElementById(event.target.id)
-        .removeEventListener("click", showOne)
-      document.getElementById(event.target.id).style.display = "none"
+      //document.getElementById(event.target.id).removeEventListener("click", showOne);
+      document.getElementById(event.target.id).style.display = "none";
     }
     //showListings();
     var bounds = new google.maps.LatLngBounds()
@@ -302,6 +300,10 @@ function hideMarkers(markers, currentMarkers) {
   }
   for (var i = 0; i < currentMarkers.length; i++) {
     currentMarkers[i].setMap(null)
+  }
+  for (var i=1; i< 7;i++){
+    //document.getElementById("l"+i).addEventListener("click", showOne);
+    document.getElementById("l"+i).style.display = "inline-block";
   }
 }
 
