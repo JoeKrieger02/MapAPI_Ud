@@ -1,6 +1,6 @@
 var map
 
-var markers = []
+var markers = [];
 
 //var polygon = null;
 
@@ -82,7 +82,7 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 50.632885, lng: 5.579185 },
-    maxZoom: 17,
+    maxZoom: 18,
     zoom: 14,
     styles: styles,
     mapTypeControl: false
@@ -97,10 +97,10 @@ function initMap() {
   var locations = [
     { title: "Théâtre de Liège", location: { lat: 50.6405905, lng: 5.5747113 } },
     { title: "Get your mug", location: { lat: 50.639573, lng: 5.573682 }},
-    { title: "Cathédrale Saint-Paul de Liège", location: { lat: 50.639573, lng: 5.573682 }},
-    { title: "Le Palais des Princes-Évêques", location: { lat: 50.6453812, lng: 5.5717773 } },
-    { title: "Le Pot au Lait", location: { lat: 50.6412571, lng: 5.5710652 } },
-    { title: "Cinéma Churchill", location: { lat: 50.6411689, lng: 5.5692158 } }
+    { title: "Cathédrale Saint-Paul", location: { lat: 50.6404139, lng: 5.5715023 }},
+    { title: "Le Palais des Princes-Évêques", location: { lat: 50.645729, lng: 5.5729943 } },
+    { title: "Le Pot au Lait", location: { lat: 50.6404783, lng: 5.5733067 } },
+    { title: "Cinéma Churchill", location: { lat: 50.6411672, lng: 5.5703101 } }
   ]
 
   var largeInfowindow = new google.maps.InfoWindow()
@@ -160,6 +160,7 @@ function initMap() {
   document.getElementById("l6").addEventListener("click", showOne)
 
   function showOne() {
+
     if (event.target.id === "l1") {
       var index = 0
     } else if (event.target.id === "l2") {
