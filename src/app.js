@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+import React from "react"
+import "./src/css/main.css"
+import { Route } from "react-router-dom"
+import App from "./App.js"
+import { BrowserRouter } from "react-router-dom"
+
+class Main extends React.Component {
+/* <!DOCTYPE html>
 <html>
    <head>
       <meta charset="utf-8">
@@ -8,7 +15,11 @@
       <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
       <script src="js/app.js"></script>
    </head>
-   <body>
+   <body> */
+   render() {
+    return (
+      <BrowserRouter>
+   <div className="app">
       <div class="title-container">
          <div class="hamburger-box">
             <button class="hamburger-button" onClick="showMenu()"><img src="img/Hamburger.svg" /> </button>
@@ -63,8 +74,13 @@
          </div>
          <div id="map" onClick="hideMenu()"></div>
       </div>
+      </div>
+      </BrowserRouter>
       <script async defer
          src=
          "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyBD14b8LrFS-VzQBzSzEgSZcaq1NhCu7Do&v=3&callback=initMap"></script>
    </body>
 </html>
+
+}
+export default Main
