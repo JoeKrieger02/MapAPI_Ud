@@ -225,6 +225,17 @@ function initMap() {
     for (var i = 0; i < markers.length; i++) {
       currentMarkers.push(markers[i])
     }
+    
+    marker.addListener("click", function() {
+      populateInfoWindow(this, largeInfowindow)
+    })
+
+    marker.addListener("mouseover", function() {
+      this.setIcon(highlightedIcon)
+    })
+    marker.addListener("mouseout", function() {
+      this.setIcon(defaultIcon)
+    })
     //currentMarkers = markers;
     markers = oldMarkers
 
@@ -347,3 +358,6 @@ function zoomToArea() {
     )
   }
 }
+
+//foursquare API
+//var foursquareCall= 'https://api.foursquare.com/v2/venues/VENUE_ID/links'
