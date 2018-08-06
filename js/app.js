@@ -1,11 +1,15 @@
+// Google MAPS With Foursquare API Integration
+
+// Initializing variables
 var map
-
 var markers = []
-
 var currentMarkers = []
 var placeMarkers = []
 
+
 function initMap() {
+
+  // Map styling from SnazzyMaps ( https://snazzymaps.com/style/61/blue-essence )
   var styles = [
     {
       featureType: "landscape.natural",
@@ -78,6 +82,7 @@ function initMap() {
     }
   ]
 
+  // Initialize map to be opened on the city of Liege
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 50.632885, lng: 5.579185 },
     maxZoom: 18,
@@ -86,12 +91,14 @@ function initMap() {
     mapTypeControl: false
   })
 
+  // Autocomplete the text input field with Google recommendations
   var zoomAutocomplete = new google.maps.places.Autocomplete(
     document.getElementById("zoom-to-area-text")
   )
-
+  // Automatically zooms into the searched location
   zoomAutocomplete.bindTo("bounds", map)
 
+  // My favorite location data (to be used with Foursquare and Google Maps)
   var locations = [
     {
       title: "Théâtre de Liège",
@@ -125,12 +132,15 @@ function initMap() {
     }
   ]
 
+  // Creating a variable for the information window
   var largeInfowindow = new google.maps.InfoWindow()
 
+  // Choosing the icon design
   var defaultIcon = makeMarkerIcon("0091ff")
-
+  // Choosing the icon desing when hover
   var highlightedIcon = makeMarkerIcon("FFFF24")
 
+  // Creates an array of maakers with my locations
   for (var i = 0; i < locations.length; i++) {
     var position = locations[i].location
     var title = locations[i].title
@@ -171,6 +181,7 @@ function initMap() {
     zoomToArea()
   })
 
+  // EventListener for each of my locations
   document.getElementById("l1").addEventListener("click", showOne)
   document.getElementById("l2").addEventListener("click", showOne)
   document.getElementById("l3").addEventListener("click", showOne)
@@ -178,6 +189,7 @@ function initMap() {
   document.getElementById("l5").addEventListener("click", showOne)
   document.getElementById("l6").addEventListener("click", showOne)
 
+  // Binds the ElementId with its correct index in the markers array
   function showOne() {
     if (event.target.id === "l1") {
       var index = 0
@@ -193,10 +205,14 @@ function initMap() {
       var index = 5
     }
 
+    // simple solution to make the loop end
     var end = index + 1
+    // creates a backup array with all markers
     var oldMarkers = markers
+    // Empty the array
     markers = []
 
+    // put the specific location informations into a marker and then push it into the array
     while (index < end) {
       var position = locations[index].location
       var title = locations[index].title
@@ -212,15 +228,15 @@ function initMap() {
       index++
       document.getElementById(event.target.id).style.display = "none"
     }
+    // fit the map to the new location
     var bounds = new google.maps.LatLngBounds()
-
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(map)
       bounds.extend(markers[i].position)
     }
-
     map.fitBounds(bounds)
 
+    // push every markers in the second array
     for (var i = 0; i < markers.length; i++) {
       currentMarkers.push(markers[i])
     }
@@ -236,12 +252,13 @@ function initMap() {
       this.setIcon(defaultIcon)
     })
 
+    // set markers to its original state
     markers = oldMarkers
 
-    l1Active = true
   }
 }
 
+// Fills the info window with current markers data
 function populateInfoWindow(marker, infowindow) {
   if (infowindow.marker != marker) {
     infowindow.setContent("")
@@ -251,9 +268,12 @@ function populateInfoWindow(marker, infowindow) {
       infowindow.marker = null
     })
 
+    // Foursquare API : starting by getting the current markers data
     getFoursquare = (marker) => {
+      //Initializing a default blank venueId
       let venueId = ""
 
+      // If the current marker title is in my location list then assing venueId to it's ID
       console.log(marker.title)
       if (marker.title == "Get your mug") {
         venueId = "539d9ad6498ef1b1c9cfa042"
@@ -269,9 +289,11 @@ function populateInfoWindow(marker, infowindow) {
         venueId = "4b9bb361f964a520831b36e3"
       }
 
+      // ID needed by the API
       const clientId = "M0CDRTVNVTZVZPB1WT1L52GHH11CA5QEBWVVQQ5MDLTOXUI5"
       const clientSecret = "ULD1LIH14YO02PRHXC4GLHF0NZ1YOHQGI2E2X0N2LSSZHC2F"
 
+      // url to call the API with the location ID and API ID
       const url =
         "https://api.foursquare.com/v2/venues/" +
         venueId +
@@ -281,7 +303,8 @@ function populateInfoWindow(marker, infowindow) {
         clientSecret +
         "&v=20180802"
 
-      // this function is from Udacity Neighborhood Map chat with student Mason W. and mentor Manish B.
+      // this function is from Udacity Neighborhood Map Chat with student Mason W. and mentor Manish B.
+      // it fetches the repsonse and uses the data to print it into the info window
       fetch(url)
         .then(function(response) {
           if (response.status !== 200) {
@@ -321,7 +344,9 @@ function populateInfoWindow(marker, infowindow) {
     infowindow.open(map, marker)
   }
 }
+// END of Foursquare API
 
+// function to show all the locations at once and fit the map accordingly
 function showListings() {
   var bounds = new google.maps.LatLngBounds()
 
@@ -332,6 +357,7 @@ function showListings() {
   map.fitBounds(bounds)
 }
 
+// function to hide all markers
 function hideMarkers(markers, currentMarkers) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null)
@@ -344,6 +370,7 @@ function hideMarkers(markers, currentMarkers) {
   }
 }
 
+// function to change marker icon
 function makeMarkerIcon(markerColor) {
   var markerImage = new google.maps.MarkerImage(
     "http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|" +
@@ -356,6 +383,8 @@ function makeMarkerIcon(markerColor) {
   )
   return markerImage
 }
+
+// function to zoom into searched area
 
 function zoomToArea() {
   var geocoder = new google.maps.Geocoder()
