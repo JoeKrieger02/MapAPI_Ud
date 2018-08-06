@@ -256,20 +256,36 @@ function populateInfoWindow(marker, infowindow) {
     })
 
 
-/*
-    var streetViewService = new google.maps.StreetViewService()
-    var radius = 50
+
 // API
-*/
 
+
+
+  // from Udacity Neighborhood Map chat with student Mason W. and mentor Manish B.
   getFoursquare = (marker) => {
+    let venueId = '';
 
-    //const {infowindow} = this.state;
+    console.log(marker.title);
+    if (marker.title == "Get your mug"){
+      venueId='539d9ad6498ef1b1c9cfa042';
+    } else if (marker.title == "Théâtre de Liège"){
+      venueId="52307eec11d20269e1c41015";
+    } else if (marker.title == "Cathédrale Saint-Paul"){
+      venueId="50390d3fe4b092ff12bc9860";
+    } else if (marker.title == "Le Palais des Princes-Évêques"){
+      venueId="4c6d7005d5c3a1cd4b77c52b";
+    } else if (marker.title == "Le Pot au Lait"){
+      venueId="4b981cbcf964a520382d35e3";
+    } else if (marker.title == "Cinéma Churchill"){
+      venueId="4b9bb361f964a520831b36e3";
+    } 
+
+
 
     const clientId = "M0CDRTVNVTZVZPB1WT1L52GHH11CA5QEBWVVQQ5MDLTOXUI5";
     const clientSecret = "ULD1LIH14YO02PRHXC4GLHF0NZ1YOHQGI2E2X0N2LSSZHC2F";
-    let venueId = '539d9ad6498ef1b1c9cfa042';
-    //const url = "https://api.foursquare.com/v2/venues/" + venueId + "?&client_id=" + clientId + "&client_secret=" + clientSecret + "&v=20180802";
+
+    //let venueId = marker.venueId;
     const url = "https://api.foursquare.com/v2/venues/" + venueId + "?&client_id=" + clientId + "&client_secret=" + clientSecret + "&v=20180802";
 
 
@@ -417,6 +433,3 @@ function zoomToArea() {
     )
   }
 }
-
-
-// from Udacity Neighborhood Map chat with student Mason W. and mentor Manish B.
