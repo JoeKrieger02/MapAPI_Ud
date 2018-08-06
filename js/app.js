@@ -1,8 +1,6 @@
 var map
 
-var markers = [];
-
-//var polygon = null;
+var markers = []
 
 var currentMarkers = []
 var placeMarkers = []
@@ -95,16 +93,39 @@ function initMap() {
   zoomAutocomplete.bindTo("bounds", map)
 
   var locations = [
-    { title: "Théâtre de Liège", location: { lat: 50.6405905, lng: 5.5747113 }, venueId:'52307eec11d20269e1c41015' },
-    { title: "Get your mug", location: { lat: 50.639573, lng: 5.573682 }, venueId:'539d9ad6498ef1b1c9cfa042'},
-    { title: "Cathédrale Saint-Paul", location: { lat: 50.6404139, lng: 5.5715023 }, venueId:'50390d3fe4b092ff12bc9860'},
-    { title: "Le Palais des Princes-Évêques", location: { lat: 50.645729, lng: 5.5729943 }, venueId:'4c6d7005d5c3a1cd4b77c52b' },
-    { title: "Le Pot au Lait", location: { lat: 50.6404783, lng: 5.5733067 }, venueId:'4b981cbcf964a520382d35e3' },
-    { title: "Cinéma Churchill", location: { lat: 50.6411672, lng: 5.5703101 }, venueId:'4b9bb361f964a520831b36e3'}
+    {
+      title: "Théâtre de Liège",
+      location: { lat: 50.6405905, lng: 5.5747113 },
+      venueId: "52307eec11d20269e1c41015"
+    },
+    {
+      title: "Get your mug",
+      location: { lat: 50.639573, lng: 5.573682 },
+      venueId: "539d9ad6498ef1b1c9cfa042"
+    },
+    {
+      title: "Cathédrale Saint-Paul",
+      location: { lat: 50.6404139, lng: 5.5715023 },
+      venueId: "50390d3fe4b092ff12bc9860"
+    },
+    {
+      title: "Le Palais des Princes-Évêques",
+      location: { lat: 50.645729, lng: 5.5729943 },
+      venueId: "4c6d7005d5c3a1cd4b77c52b"
+    },
+    {
+      title: "Le Pot au Lait",
+      location: { lat: 50.6404783, lng: 5.5733067 },
+      venueId: "4b981cbcf964a520382d35e3"
+    },
+    {
+      title: "Cinéma Churchill",
+      location: { lat: 50.6411672, lng: 5.5703101 },
+      venueId: "4b9bb361f964a520831b36e3"
+    }
   ]
 
   var largeInfowindow = new google.maps.InfoWindow()
-
 
   var defaultIcon = makeMarkerIcon("0091ff")
 
@@ -150,9 +171,6 @@ function initMap() {
     zoomToArea()
   })
 
-  //TEST
-
-  //var one = 1;
   document.getElementById("l1").addEventListener("click", showOne)
   document.getElementById("l2").addEventListener("click", showOne)
   document.getElementById("l3").addEventListener("click", showOne)
@@ -161,7 +179,6 @@ function initMap() {
   document.getElementById("l6").addEventListener("click", showOne)
 
   function showOne() {
-
     if (event.target.id === "l1") {
       var index = 0
     } else if (event.target.id === "l2") {
@@ -192,37 +209,18 @@ function initMap() {
         id: i
       })
       markers.push(marker)
-      //currentMarkers.push(markers);
       index++
-      //document.getElementById(event.target.id).removeEventListener("click", showOne);
-      document.getElementById(event.target.id).style.display = "none";
+      document.getElementById(event.target.id).style.display = "none"
     }
-    //showListings();
     var bounds = new google.maps.LatLngBounds()
 
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(map)
       bounds.extend(markers[i].position)
     }
-    // Don't zoom in too far on only one marker from StackOverflow (https://stackoverflow.com/questions/3334729/google-maps-v3-fitbounds-zoom-too-close-for-single-marker)
-/*
-    if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
-      var extendPoint1 = new google.maps.LatLng(
-        bounds.getNorthEast().lat() + 0.01,
-        bounds.getNorthEast().lng() + 0.01
-      )
-      var extendPoint2 = new google.maps.LatLng(
-        bounds.getNorthEast().lat() - 0.01,
-        bounds.getNorthEast().lng() - 0.01
-      )
-      bounds.extend(extendPoint1)
-      bounds.extend(extendPoint2)
-    }
-    */
+
     map.fitBounds(bounds)
-    //
-    //currentMarkers.push(oldMarkers);
-    //currentMarkers.push(markers);
+
     for (var i = 0; i < markers.length; i++) {
       currentMarkers.push(markers[i])
     }
@@ -237,13 +235,11 @@ function initMap() {
     marker.addListener("mouseout", function() {
       this.setIcon(defaultIcon)
     })
-    //currentMarkers = markers;
+
     markers = oldMarkers
 
     l1Active = true
   }
-
-  //TEST
 }
 
 function populateInfoWindow(marker, infowindow) {
@@ -255,116 +251,72 @@ function populateInfoWindow(marker, infowindow) {
       infowindow.marker = null
     })
 
+    getFoursquare = (marker) => {
+      let venueId = ""
 
-
-// API
-
-
-
-  // from Udacity Neighborhood Map chat with student Mason W. and mentor Manish B.
-  getFoursquare = (marker) => {
-    let venueId = '';
-
-    console.log(marker.title);
-    if (marker.title == "Get your mug"){
-      venueId='539d9ad6498ef1b1c9cfa042';
-    } else if (marker.title == "Théâtre de Liège"){
-      venueId="52307eec11d20269e1c41015";
-    } else if (marker.title == "Cathédrale Saint-Paul"){
-      venueId="50390d3fe4b092ff12bc9860";
-    } else if (marker.title == "Le Palais des Princes-Évêques"){
-      venueId="4c6d7005d5c3a1cd4b77c52b";
-    } else if (marker.title == "Le Pot au Lait"){
-      venueId="4b981cbcf964a520382d35e3";
-    } else if (marker.title == "Cinéma Churchill"){
-      venueId="4b9bb361f964a520831b36e3";
-    } 
-
-
-
-    const clientId = "M0CDRTVNVTZVZPB1WT1L52GHH11CA5QEBWVVQQ5MDLTOXUI5";
-    const clientSecret = "ULD1LIH14YO02PRHXC4GLHF0NZ1YOHQGI2E2X0N2LSSZHC2F";
-
-    //let venueId = marker.venueId;
-    const url = "https://api.foursquare.com/v2/venues/" + venueId + "?&client_id=" + clientId + "&client_secret=" + clientSecret + "&v=20180802";
-
-
-    fetch(url)
-      .then(
-        function (response) {
-
-          if (response.status !== 200) {
-            infowindow.setContent("Data failed to load");
-            return;
-          }
-
-          // Examine the text in the response
-          response.json().then(function (data) {
-            let name_data = data.response.venue.name;
-            let location_data = data.response.venue.location.formattedAddress;
-            let contact_data = data.response.venue.contact.formattedPhone;
-            let url_data = data.response.venue.url;
-            let rating_data = data.response.venue.rating;
-
-            let name = '<b>' + name_data + '</b>' + '<br>';
-            let address = '<b>Address: </b>' + location_data + '<br>';
-            let phone = '<b>Phone: </b>' + contact_data + '<br>';
-            let site = '<b>Website: </b>' + url_data + '<br>';
-            let rating = '<b>Rating: </b>' + rating_data + '<br>';
-            let more = '<a href="https://foursquare.com/v/'+ data.response.venue.id +'" target="_blank">Read More on Foursquare Website</a>'
-
-            infowindow.setContent(name + address + phone + site + rating + more);
-          });
-        }
-      )
-
-
-
-      .catch(function (error) {
-        infowindow.setContent("Data failed to load");
-      });
-
-  };
-
-
-
-// API
-/*
-    function getStreetView(data, status) {
-      if (status == google.maps.StreetViewStatus.OK) {
-        var nearStreetViewLocation = data.location.latLng
-        var heading = google.maps.geometry.spherical.computeHeading(
-          nearStreetViewLocation,
-          marker.position
-        )
-        infowindow.setContent(
-          "<div>" + marker.title + '</div><div id="pano"></div>'
-        )
-        var panoramaOptions = {
-          position: nearStreetViewLocation,
-          pov: {
-            heading: heading,
-            pitch: 20
-          }
-        }
-        var panorama = new google.maps.StreetViewPanorama(
-          document.getElementById("pano"),
-          panoramaOptions
-        )
-      } else {
-        infowindow.setContent(
-          "<div>" + marker.title + "</div>" + "<div>No Street View Found</div>"
-        )
+      console.log(marker.title)
+      if (marker.title == "Get your mug") {
+        venueId = "539d9ad6498ef1b1c9cfa042"
+      } else if (marker.title == "Théâtre de Liège") {
+        venueId = "52307eec11d20269e1c41015"
+      } else if (marker.title == "Cathédrale Saint-Paul") {
+        venueId = "50390d3fe4b092ff12bc9860"
+      } else if (marker.title == "Le Palais des Princes-Évêques") {
+        venueId = "4c6d7005d5c3a1cd4b77c52b"
+      } else if (marker.title == "Le Pot au Lait") {
+        venueId = "4b981cbcf964a520382d35e3"
+      } else if (marker.title == "Cinéma Churchill") {
+        venueId = "4b9bb361f964a520831b36e3"
       }
+
+      const clientId = "M0CDRTVNVTZVZPB1WT1L52GHH11CA5QEBWVVQQ5MDLTOXUI5"
+      const clientSecret = "ULD1LIH14YO02PRHXC4GLHF0NZ1YOHQGI2E2X0N2LSSZHC2F"
+
+      const url =
+        "https://api.foursquare.com/v2/venues/" +
+        venueId +
+        "?&client_id=" +
+        clientId +
+        "&client_secret=" +
+        clientSecret +
+        "&v=20180802"
+
+      // this function is from Udacity Neighborhood Map chat with student Mason W. and mentor Manish B.
+      fetch(url)
+        .then(function(response) {
+          if (response.status !== 200) {
+            infowindow.setContent("Data failed to load")
+            return
+          }
+
+          response.json().then(function(data) {
+            let name_data = data.response.venue.name
+            let location_data = data.response.venue.location.formattedAddress
+            let contact_data = data.response.venue.contact.formattedPhone
+            let url_data = data.response.venue.url
+            let rating_data = data.response.venue.rating
+
+            let name = "<b>" + name_data + "</b>" + "<br>"
+            let address = "<b>Address: </b>" + location_data + "<br>"
+            let phone = "<b>Phone: </b>" + contact_data + "<br>"
+            let site = "<b>Website: </b>" + url_data + "<br>"
+            let rating = "<b>Rating: </b>" + rating_data + "<br>"
+            let more =
+              '<a href="https://foursquare.com/v/' +
+              data.response.venue.id +
+              '" target="_blank">Read More on Foursquare Website</a>'
+
+            infowindow.setContent(name + address + phone + site + rating + more)
+          })
+        })
+
+        .catch(function(error) {
+          infowindow.setContent("Data failed to load")
+        })
     }
 
-    streetViewService.getPanoramaByLocation(
-      marker.position,
-      radius,
-      getStreetView
-    )
-*/  infowindow.marker = marker;
-    this.getFoursquare(marker);
+    infowindow.marker = marker
+    this.getFoursquare(marker)
 
     infowindow.open(map, marker)
   }
@@ -387,9 +339,8 @@ function hideMarkers(markers, currentMarkers) {
   for (var i = 0; i < currentMarkers.length; i++) {
     currentMarkers[i].setMap(null)
   }
-  for (var i=1; i< 7;i++){
-    //document.getElementById("l"+i).addEventListener("click", showOne);
-    document.getElementById("l"+i).style.display = "inline-block";
+  for (var i = 1; i < 7; i++) {
+    document.getElementById("l" + i).style.display = "inline-block"
   }
 }
 
