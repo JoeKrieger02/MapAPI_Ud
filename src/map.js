@@ -1,13 +1,24 @@
+import React from "react"
+
+
+class Map extends React.Component {
+
 // Google MAPS With Foursquare API Integration
 
 // Initializing variables
-var map
-var markers = []
-var currentMarkers = []
-var placeMarkers = []
+state = {
+   map : [],
+   markers : [],
+   currentMarkers : [],
+   placeMarkers : [],
 
+}
 
-function initMap() {
+componentDidMount(){
+this.initMap()
+}
+
+initMap() {
 
   // Map styling from SnazzyMaps ( https://snazzymaps.com/style/61/blue-essence )
   var styles = [
@@ -82,8 +93,9 @@ function initMap() {
     }
   ]
 
+  const {google}= this.props
   // Initialize map to be opened on the city of Liege
-  map = new google.maps.Map(document.getElementById("map"), {
+  this.map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 50.632885, lng: 5.579185 },
     maxZoom: 18,
     zoom: 14,
@@ -96,7 +108,7 @@ function initMap() {
     document.getElementById("zoom-to-area-text")
   )
   // Automatically zooms into the searched location
-  zoomAutocomplete.bindTo("bounds", map)
+  zoomAutocomplete.bindTo("bounds", this.map)
 
   // My favorite location data (to be used with Foursquare and Google Maps)
   var locations = [
@@ -136,9 +148,9 @@ function initMap() {
   var largeInfowindow = new google.maps.InfoWindow()
 
   // Choosing the icon design
-  var defaultIcon = makeMarkerIcon("0091ff")
+  var defaultIcon =this.makeMarkerIcon("0091ff")
   // Choosing the icon desing when hover
-  var highlightedIcon = makeMarkerIcon("FFFF24")
+  var highlightedIcon = this.makeMarkerIcon("FFFF24")
 
   // Creates an array of maakers with my locations
   for (var i = 0; i < locations.length; i++) {
@@ -152,11 +164,12 @@ function initMap() {
       icon: defaultIcon,
       id: i
     })
-
+    // test
+    var {markers} = this.state
     markers.push(marker)
 
     marker.addListener("click", function() {
-      populateInfoWindow(this, largeInfowindow)
+      this.populateInfoWindow(this, largeInfowindow)
     })
 
     marker.addListener("mouseover", function() {
@@ -169,16 +182,16 @@ function initMap() {
 
   document
     .getElementById("show-listings")
-    .addEventListener("click", showListings)
+    .addEventListener("click", this.showListings)
 
   document
     .getElementById("hide-listings")
     .addEventListener("click", function() {
-      hideMarkers(markers, currentMarkers)
+      this.hideMarkers(markers, this.currentMarkers)
     })
 
   document.getElementById("zoom-to-area").addEventListener("click", function() {
-    zoomToArea()
+    this.zoomToArea()
   })
 
   // EventListener for each of my locations
@@ -190,7 +203,7 @@ function initMap() {
   document.getElementById("l6").addEventListener("click", showOne)
 
   // Binds the ElementId with its correct index in the markers array
-  function showOne() {
+  function showOne(event) {
     if (event.target.id === "l1") {
       var index = 0
     } else if (event.target.id === "l2") {
@@ -231,18 +244,18 @@ function initMap() {
     // fit the map to the new location
     var bounds = new google.maps.LatLngBounds()
     for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(map)
+      markers[i].setMap(this.map)
       bounds.extend(markers[i].position)
     }
-    map.fitBounds(bounds)
+    this.map.fitBounds(bounds)
 
     // push every markers in the second array
     for (var i = 0; i < markers.length; i++) {
-      currentMarkers.push(markers[i])
+      this.currentMarkers.push(markers[i])
     }
 
     marker.addListener("click", function() {
-      populateInfoWindow(this, largeInfowindow)
+      this.populateInfoWindow(this, largeInfowindow)
     })
 
     marker.addListener("mouseover", function() {
@@ -257,9 +270,29 @@ function initMap() {
 
   }
 }
+// html functions
+ showMenu(){
 
+  var x = document.getElementById("options-box");
+  var y = document.getElementById("map");
+  if(x.style.display === "none") {
+    x.style.display = "inline-block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+ hideMenu(){
+
+  var x = document.getElementById("options-box");
+
+  if(x.style.display === "inline-block") {
+    x.style.display = "none";
+  }
+}
+// html functions end
 // Fills the info window with current markers data
-function populateInfoWindow(marker, infowindow) {
+ populateInfoWindow(marker, infowindow) {
   if (infowindow.marker != marker) {
     infowindow.setContent("")
     infowindow.marker = marker
@@ -269,7 +302,7 @@ function populateInfoWindow(marker, infowindow) {
     })
 
     // Foursquare API : starting by getting the current markers data
-    getFoursquare = (marker) => {
+    var getFoursquare = (marker) => {
       //Initializing a default blank venueId
       let venueId = ""
 
@@ -341,24 +374,26 @@ function populateInfoWindow(marker, infowindow) {
     infowindow.marker = marker
     this.getFoursquare(marker)
 
-    infowindow.open(map, marker)
+    infowindow.open(this.map, marker)
   }
 }
 // END of Foursquare API
 
 // function to show all the locations at once and fit the map accordingly
-function showListings() {
+ showListings() {
+   const {google} = this.props
+   const {markers} = this.state
   var bounds = new google.maps.LatLngBounds()
 
   for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map)
+    markers[i].setMap(this.map)
     bounds.extend(markers[i].position)
   }
-  map.fitBounds(bounds)
+  this.map.fitBounds(bounds)
 }
 
 // function to hide all markers
-function hideMarkers(markers, currentMarkers) {
+ hideMarkers(markers, currentMarkers) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null)
   }
@@ -371,7 +406,8 @@ function hideMarkers(markers, currentMarkers) {
 }
 
 // function to change marker icon
-function makeMarkerIcon(markerColor) {
+ makeMarkerIcon(markerColor) {
+   const {google} = this.props
   var markerImage = new google.maps.MarkerImage(
     "http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|" +
       markerColor +
@@ -386,7 +422,8 @@ function makeMarkerIcon(markerColor) {
 
 // function to zoom into searched area
 
-function zoomToArea() {
+ zoomToArea() {
+   const {google} = this.props
   var geocoder = new google.maps.Geocoder()
 
   var address = document.getElementById("zoom-to-area-text").value
@@ -401,8 +438,8 @@ function zoomToArea() {
       },
       function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          map.setCenter(results[0].geometry.location)
-          map.setZoom(15)
+          this.map.setCenter(results[0].geometry.location)
+          this.map.setZoom(15)
         } else {
           window.alert(
             "We could not find that location - try entering a more" +
@@ -413,3 +450,8 @@ function zoomToArea() {
     )
   }
 }
+
+
+
+}
+export default Map

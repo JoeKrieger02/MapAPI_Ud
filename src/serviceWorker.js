@@ -1,10 +1,10 @@
-"use strict";
+//"use strict";
 
 console.log('WORKER: executing.');
 
 //  version number
 var version = 'v2::';
-
+//var self = this;
 // Resources to be stored into cache
 var offlineFundamentals = [
   '/',
@@ -18,7 +18,7 @@ var offlineFundamentals = [
 ];
 
 // The install eventListener
-self.addEventListener("install", function (event) {
+window.addEventListener("install", function (event) {
   console.log('WORKER: install event in progress.');
   // Blocks the install process.
   event.waitUntil(
@@ -37,7 +37,7 @@ self.addEventListener("install", function (event) {
 });
 
 
-self.addEventListener("fetch", function (event) {
+window.addEventListener("fetch", function (event) {
   console.log('WORKER: fetch event in progress.');
 
   // cache GET requests
@@ -104,7 +104,7 @@ self.addEventListener("fetch", function (event) {
 });
 
 // Activate if service worker has been successfully installed.
-self.addEventListener("activate", function (event) {
+window.addEventListener("activate", function (event) {
   // blocks activate on a promise.
   console.log('WORKER: activate event in progress.');
 
