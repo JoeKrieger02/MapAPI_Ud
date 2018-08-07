@@ -5,7 +5,7 @@ html, body {
      margin: 0;
      padding: 0;
      overflow: hidden;
-} 
+}
 /* Small nametag to show in menu on small screens */
  #krieger {
      display: none;
@@ -154,9 +154,13 @@ html, body {
      cursor: pointer;
 }
  #map {
-     height: 95%;
+
+     height: 2500px;
+     max-height: 95vh;
      right: 0px;
-     position: fixed;
+     /*position: fixed;*/
+
+     position: relative;
      width: auto;
 }
  #options-box {

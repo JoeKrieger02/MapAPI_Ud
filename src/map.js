@@ -1,4 +1,5 @@
 import React from "react"
+import { BrowserRouter } from "react-router-dom"
 
 
 class Map extends React.Component {
@@ -7,15 +8,17 @@ class Map extends React.Component {
 
 // Initializing variables
 state = {
-   map : [],
+   //map,
    markers : [],
    currentMarkers : [],
    placeMarkers : [],
+   largeInfowindow : new this.props.google.maps.InfoWindow(),
 
 }
 
 componentDidMount(){
-this.initMap()
+
+this.initMap();
 }
 
 initMap() {
@@ -94,6 +97,7 @@ initMap() {
   ]
 
   const {google}= this.props
+  const {largeInfowindow}= this.state
   // Initialize map to be opened on the city of Liege
   this.map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 50.632885, lng: 5.579185 },
@@ -102,6 +106,7 @@ initMap() {
     styles: styles,
     mapTypeControl: false
   })
+
 
   // Autocomplete the text input field with Google recommendations
   var zoomAutocomplete = new google.maps.places.Autocomplete(
@@ -145,7 +150,7 @@ initMap() {
   ]
 
   // Creating a variable for the information window
-  var largeInfowindow = new google.maps.InfoWindow()
+  // var largeInfowindow = new google.maps.InfoWindow()
 
   // Choosing the icon design
   var defaultIcon =this.makeMarkerIcon("0091ff")
@@ -160,6 +165,7 @@ initMap() {
     var marker = new google.maps.Marker({
       position: position,
       title: title,
+      map: this.map,
       animation: google.maps.Animation.DROP,
       icon: defaultIcon,
       id: i
@@ -194,87 +200,157 @@ initMap() {
     this.zoomToArea()
   })
 
-  // EventListener for each of my locations
+/*
   document.getElementById("l1").addEventListener("click", showOne)
   document.getElementById("l2").addEventListener("click", showOne)
   document.getElementById("l3").addEventListener("click", showOne)
   document.getElementById("l4").addEventListener("click", showOne)
   document.getElementById("l5").addEventListener("click", showOne)
   document.getElementById("l6").addEventListener("click", showOne)
+*/
 
-  // Binds the ElementId with its correct index in the markers array
-  function showOne(event) {
-    if (event.target.id === "l1") {
-      var index = 0
-    } else if (event.target.id === "l2") {
-      var index = 1
-    } else if (event.target.id === "l3") {
-      var index = 2
-    } else if (event.target.id === "l4") {
-      var index = 3
-    } else if (event.target.id === "l5") {
-      var index = 4
-    } else if (event.target.id === "l6") {
-      var index = 5
-    }
-
-    // simple solution to make the loop end
-    var end = index + 1
-    // creates a backup array with all markers
-    var oldMarkers = markers
-    // Empty the array
-    markers = []
-
-    // put the specific location informations into a marker and then push it into the array
-    while (index < end) {
-      var position = locations[index].location
-      var title = locations[index].title
-
-      var marker = new google.maps.Marker({
-        position: position,
-        title: title,
-        animation: google.maps.Animation.DROP,
-        icon: defaultIcon,
-        id: i
-      })
-      markers.push(marker)
-      index++
-      document.getElementById(event.target.id).style.display = "none"
-    }
-    // fit the map to the new location
-    var bounds = new google.maps.LatLngBounds()
-    for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(this.map)
-      bounds.extend(markers[i].position)
-    }
-    this.map.fitBounds(bounds)
-
-    // push every markers in the second array
-    for (var i = 0; i < markers.length; i++) {
-      this.currentMarkers.push(markers[i])
-    }
-
-    marker.addListener("click", function() {
-      this.populateInfoWindow(this, largeInfowindow)
-    })
-
-    marker.addListener("mouseover", function() {
-      this.setIcon(highlightedIcon)
-    })
-    marker.addListener("mouseout", function() {
-      this.setIcon(defaultIcon)
-    })
-
-    // set markers to its original state
-    markers = oldMarkers
-
-  }
 }
+
+// Binds the ElementId with its correct index in the markers array
+ showOne = (event) => {
+
+
+   var locations = [
+     {
+       title: "Théâtre de Liège",
+       location: { lat: 50.6405905, lng: 5.5747113 },
+       venueId: "52307eec11d20269e1c41015"
+     },
+     {
+       title: "Get your mug",
+       location: { lat: 50.639573, lng: 5.573682 },
+       venueId: "539d9ad6498ef1b1c9cfa042"
+     },
+     {
+       title: "Cathédrale Saint-Paul",
+       location: { lat: 50.6404139, lng: 5.5715023 },
+       venueId: "50390d3fe4b092ff12bc9860"
+     },
+     {
+       title: "Le Palais des Princes-Évêques",
+       location: { lat: 50.645729, lng: 5.5729943 },
+       venueId: "4c6d7005d5c3a1cd4b77c52b"
+     },
+     {
+       title: "Le Pot au Lait",
+       location: { lat: 50.6404783, lng: 5.5733067 },
+       venueId: "4b981cbcf964a520382d35e3"
+     },
+     {
+       title: "Cinéma Churchill",
+       location: { lat: 50.6411672, lng: 5.5703101 },
+       venueId: "4b9bb361f964a520831b36e3"
+     }
+   ]
+
+  const {google} = this.props
+  var {markers} = this.state
+  var currentMarkers = [];
+
+  // Choosing the icon design
+  var defaultIcon =this.makeMarkerIcon("0091ff")
+  // Choosing the icon desing when hover
+  var highlightedIcon = this.makeMarkerIcon("FFFF24")
+  var index = 0
+
+  if (event.target.id === "l1") {
+     index = 0
+  } else if (event.target.id === "l2") {
+     index = 1
+  } else if (event.target.id === "l3") {
+     index = 2
+  } else if (event.target.id === "l4") {
+     index = 3
+  } else if (event.target.id === "l5") {
+     index = 4
+  } else if (event.target.id === "l6") {
+     index = 5
+  }
+
+  // simple solution to make the loop end
+  var end = index + 1
+
+  // creates a backup array with all markers
+  var oldMarkers = markers
+  // Empty the array
+  markers = []
+
+  // put the specific location informations into a marker and then push it into the array
+  while (index < end) {
+    var position = locations[index].location
+    var title = locations[index].title
+
+    var marker = new google.maps.Marker({
+      position: position,
+      title: title,
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      icon: defaultIcon,
+      id: index
+    })
+
+    markers.push(marker)
+
+    index++
+    document.getElementById(event.target.id).style.display = "none"
+  }
+  // fit the map to the new location
+  const bounds = new google.maps.LatLngBounds()
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(this.map)
+    bounds.extend(markers[i].position)
+  }
+
+  this.map.fitBounds(bounds)
+
+  // push every markers in the second array
+  for (var id = 0; id < markers.length; id++) {
+
+    currentMarkers.push(markers[id])
+  }
+
+  marker.addListener("click", function() {
+    this.populateInfoWindow(this, this.state.largeInfowindow)
+  })
+
+  marker.addListener("mouseover", function() {
+    this.setIcon(highlightedIcon)
+  })
+  marker.addListener("mouseout", function() {
+    this.setIcon(defaultIcon)
+  })
+
+  // set markers to its original state
+  markers = oldMarkers
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // html functions
  showMenu(){
+   // EventListener for each of my locations
 
   var x = document.getElementById("options-box");
-  var y = document.getElementById("map");
+  //var y = document.getElementById("map");
   if(x.style.display === "none") {
     x.style.display = "inline-block";
   } else {
@@ -293,7 +369,7 @@ initMap() {
 // html functions end
 // Fills the info window with current markers data
  populateInfoWindow(marker, infowindow) {
-  if (infowindow.marker != marker) {
+  if (infowindow.marker !== marker) {
     infowindow.setContent("")
     infowindow.marker = marker
 
@@ -308,17 +384,17 @@ initMap() {
 
       // If the current marker title is in my location list then assing venueId to it's ID
       console.log(marker.title)
-      if (marker.title == "Get your mug") {
+      if (marker.title === "Get your mug") {
         venueId = "539d9ad6498ef1b1c9cfa042"
-      } else if (marker.title == "Théâtre de Liège") {
+      } else if (marker.title === "Théâtre de Liège") {
         venueId = "52307eec11d20269e1c41015"
-      } else if (marker.title == "Cathédrale Saint-Paul") {
+      } else if (marker.title === "Cathédrale Saint-Paul") {
         venueId = "50390d3fe4b092ff12bc9860"
-      } else if (marker.title == "Le Palais des Princes-Évêques") {
+      } else if (marker.title === "Le Palais des Princes-Évêques") {
         venueId = "4c6d7005d5c3a1cd4b77c52b"
-      } else if (marker.title == "Le Pot au Lait") {
+      } else if (marker.title === "Le Pot au Lait") {
         venueId = "4b981cbcf964a520382d35e3"
-      } else if (marker.title == "Cinéma Churchill") {
+      } else if (marker.title === "Cinéma Churchill") {
         venueId = "4b9bb361f964a520831b36e3"
       }
 
@@ -352,7 +428,7 @@ initMap() {
             let url_data = data.response.venue.url
             let rating_data = data.response.venue.rating
 
-            let name = "<b>" + name_data + "</b>" + "<br>"
+            let name = "<b>" + name_data + "</b><br>"
             let address = "<b>Address: </b>" + location_data + "<br>"
             let phone = "<b>Phone: </b>" + contact_data + "<br>"
             let site = "<b>Website: </b>" + url_data + "<br>"
@@ -372,7 +448,7 @@ initMap() {
     }
 
     infowindow.marker = marker
-    this.getFoursquare(marker)
+    getFoursquare(marker)
 
     infowindow.open(this.map, marker)
   }
@@ -383,7 +459,7 @@ initMap() {
  showListings() {
    const {google} = this.props
    const {markers} = this.state
-  var bounds = new google.maps.LatLngBounds()
+   const bounds = new google.maps.LatLngBounds()
 
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(this.map)
@@ -394,14 +470,14 @@ initMap() {
 
 // function to hide all markers
  hideMarkers(markers, currentMarkers) {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null)
+  for (var it = 0; it < markers.length; it++) {
+    markers[it].setMap(null)
   }
-  for (var i = 0; i < currentMarkers.length; i++) {
-    currentMarkers[i].setMap(null)
+  for (var is = 0; is < currentMarkers.length; is++) {
+    currentMarkers[is].setMap(null)
   }
-  for (var i = 1; i < 7; i++) {
-    document.getElementById("l" + i).style.display = "inline-block"
+  for (var ix = 1; ix < 7; ix++) {
+    document.getElementById("l" + ix).style.display = "inline-block"
   }
 }
 
@@ -428,7 +504,7 @@ initMap() {
 
   var address = document.getElementById("zoom-to-area-text").value
 
-  if (address == "") {
+  if (address === "") {
     window.alert("You must enter an area, or address.")
   } else {
     geocoder.geocode(
@@ -437,7 +513,7 @@ initMap() {
         componentRestrictions: { locality: "New York" }
       },
       function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
+        if (status === google.maps.GeocoderStatus.OK) {
           this.map.setCenter(results[0].geometry.location)
           this.map.setZoom(15)
         } else {
@@ -451,7 +527,47 @@ initMap() {
   }
 }
 
+render() {
+    return (
+<BrowserRouter>
+   <div className="app">
+      <div className="title-container">
+         <div className="hamburger-box">
+            <button className="hamburger-button" onClick={this.showMenu}><img alt="menu" src="img/Hamburger.svg" /> </button>
+         </div>
+         <div className="title-box">
+            <h1> Krieger MAPS</h1>
+         </div>
+         <div className="search-box">
+            <input id="zoom-to-area-text" type="text" placeholder=" Zoom near a location" />
+            <input id="zoom-to-area" type="button" value="Search"/>
+         </div>
+      </div>
+      <div className="container">
+         <div id="options-box" style={{display: 'none'}}>
+            <div>
+               <p> My favorite places</p>
+               <input id="show-listings" type="button" value="Show All"/>
+               <input id="hide-listings" type="button" value="Hide All"/>
+            </div>
+            <div className='list'>
+               <ol>
+                  <li ><span className="toggle"><button className="show" id="l1" onClick={this.showOne}> SHOW </button></span> Théâtre de Liège </li>
+                  <li ><span className="toggle"><button className="show" id="l2" onClick={this.showOne}> SHOW </button></span> Get your mug </li>
+                  <li ><span className="toggle"><button className="show" id="l3" onClick={this.showOne}> SHOW </button></span> Cathédrale Saint-Paul </li>
+                  <li ><span className="toggle"><button className="show" id="l4" onClick={this.showOne}> SHOW </button></span> Le Palais des Princes-Évêques </li>
+                  <li ><span className="toggle"><button className="show" id="l5" onClick={this.showOne}> SHOW </button></span> Le Pot au Lait </li>
+                  <li ><span className="toggle"><button className="show" id="l6" onClick={this.showOne}> SHOW </button></span> Cinéma Churchill </li>
+               </ol>
+            </div>
+            <h2 id="krieger"> Krieger MAPS</h2>
+         </div>
+         <div role="application" className="map" id="map" onClick={this.hideMenu}></div>
 
-
+      </div>
+      </div>
+      </BrowserRouter>
+    )
+  }
 }
 export default Map
