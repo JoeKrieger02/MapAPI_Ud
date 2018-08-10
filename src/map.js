@@ -325,12 +325,12 @@ initMap() {
   }
 */
 
-  console.log(currentMarkers)
 
-  marker.addListener("click", function() {
-    this.populateInfoWindow(this, largeInfowindow)
+//console.log("call-marker-title : " + marker.title)
+  marker.addListener("click", () => {
+    this.populateInfoWindow(marker, largeInfowindow)
   })
-  
+
   document
     .getElementById("hide-listings")
     .addEventListener("click", () => {
@@ -387,8 +387,9 @@ initMap() {
 }
 // html functions end
 // Fills the info window with current markers data
- populateInfoWindows(marker, infowindow) {
+ populateInfoWindow = (marker, infowindow) => {
 
+   console.log("function-marker-title : " + marker.title)
 
   if (infowindow.marker !== marker) {
     infowindow.setContent("")
@@ -397,6 +398,7 @@ initMap() {
     infowindow.addListener("closeclick", () => {
       infowindow.marker = null
     })
+
 
     // Foursquare API : starting by getting the current markers data
     var getFoursquare = (marker) => {
@@ -418,6 +420,7 @@ initMap() {
       } else if (marker.title === "Cinéma Churchill") {
         venueId = "4b9bb361f964a520831b36e3"
       }
+
 
       // ID needed by the API
       const clientId = "M0CDRTVNVTZVZPB1WT1L52GHH11CA5QEBWVVQQ5MDLTOXUI5"
@@ -478,7 +481,7 @@ initMap() {
 
 // function to show all the locations at once and fit the map accordingly
  showListings(google) {
-   console.log(this.props)
+
    //const {google} = this.props
    const {markers} = this.state
    const bounds = new google.maps.LatLngBounds()
@@ -544,8 +547,10 @@ initMap() {
 
      markers.push(marker)
 
-     marker.addListener("click", function() {
-       this.populateInfoWindow(this, largeInfowindow)
+
+     marker.addListener("click", () => {
+       this.populateInfoWindow(marker, largeInfowindow)
+
      })
 
      marker.addListener("mouseover", function() {
@@ -577,10 +582,9 @@ initMap() {
   for (var it = 0; it < markers.length; it++) {
     markers[it].setMap(null)
   }
-console.log("before "+currentMarkers)
   for (var is = 0; is < currentMarkers.length; is++) {
     currentMarkers[is].setMap(null)
-  }console.log("after " + currentMarkers)
+  }
   for (var ix = 1; ix < 7; ix++) {
     document.getElementById("l" + ix).style.display = "inline-block"
   }
