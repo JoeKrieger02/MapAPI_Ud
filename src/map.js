@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter } from "react-router-dom"
+//import { BrowserRouter } from "react-router-dom"
 
 
 class Map extends React.Component {
@@ -97,7 +97,7 @@ initMap() {
   ]
 
   const {google}= this.props
-  const {largeInfowindow}= this.state
+  //const {largeInfowindow}= this.state
   // Initialize map to be opened on the city of Liege
   this.map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 50.632885, lng: 5.579185 },
@@ -115,6 +115,7 @@ initMap() {
   // Automatically zooms into the searched location
   zoomAutocomplete.bindTo("bounds", this.map)
 
+/*
   // My favorite location data (to be used with Foursquare and Google Maps)
   var locations = [
     {
@@ -150,7 +151,7 @@ initMap() {
   ]
 
   // Creating a variable for the information window
-  // var largeInfowindow = new google.maps.InfoWindow()
+   var largeInfowindow = new google.maps.InfoWindow()
 
   // Choosing the icon design
   var defaultIcon =this.makeMarkerIcon("0091ff")
@@ -171,7 +172,9 @@ initMap() {
       id: i
     })
     // test
+
     var {markers} = this.state
+
     markers.push(marker)
 
     marker.addListener("click", function() {
@@ -184,19 +187,25 @@ initMap() {
     marker.addListener("mouseout", function() {
       this.setIcon(defaultIcon)
     })
-  }
 
+
+  }*/
+
+  //console.log(this.props)
   document
     .getElementById("show-listings")
-    .addEventListener("click", this.showListings)
-
+    //.addEventListener("click", this.showListings(google))
+    .addEventListener("click", () => {
+      this.showListings(google);
+    })
+/*
   document
     .getElementById("hide-listings")
-    .addEventListener("click", function() {
+    .addEventListener("click", () => {
       this.hideMarkers(markers, this.currentMarkers)
     })
-
-  document.getElementById("zoom-to-area").addEventListener("click", function() {
+*/
+  document.getElementById("zoom-to-area").addEventListener("click", () => {
     this.zoomToArea()
   })
 
@@ -210,6 +219,7 @@ initMap() {
 */
 
 }
+
 
 // Binds the ElementId with its correct index in the markers array
  showOne = (event) => {
@@ -251,7 +261,7 @@ initMap() {
   const {google} = this.props
   var {markers} = this.state
   var currentMarkers = [];
-
+  var largeInfowindow = new google.maps.InfoWindow()
   // Choosing the icon design
   var defaultIcon =this.makeMarkerIcon("0091ff")
   // Choosing the icon desing when hover
@@ -315,7 +325,7 @@ initMap() {
   }
 
   marker.addListener("click", function() {
-    this.populateInfoWindow(this, this.state.largeInfowindow)
+    this.populateInfoWindow(this, largeInfowindow)
   })
 
   marker.addListener("mouseover", function() {
@@ -368,12 +378,14 @@ initMap() {
 }
 // html functions end
 // Fills the info window with current markers data
- populateInfoWindow(marker, infowindow) {
+ populateInfoWindows(marker, infowindow) {
+
+
   if (infowindow.marker !== marker) {
     infowindow.setContent("")
     infowindow.marker = marker
 
-    infowindow.addListener("closeclick", function() {
+    infowindow.addListener("closeclick", () => {
       infowindow.marker = null
     })
 
@@ -383,7 +395,7 @@ initMap() {
       let venueId = ""
 
       // If the current marker title is in my location list then assing venueId to it's ID
-      console.log(marker.title)
+
       if (marker.title === "Get your mug") {
         venueId = "539d9ad6498ef1b1c9cfa042"
       } else if (marker.title === "Théâtre de Liège") {
@@ -456,15 +468,95 @@ initMap() {
 // END of Foursquare API
 
 // function to show all the locations at once and fit the map accordingly
- showListings() {
-   const {google} = this.props
+ showListings(google) {
+   console.log(this.props)
+   //const {google} = this.props
    const {markers} = this.state
    const bounds = new google.maps.LatLngBounds()
 
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(this.map)
-    bounds.extend(markers[i].position)
+   var locations = [
+     {
+       title: "Théâtre de Liège",
+       location: { lat: 50.6405905, lng: 5.5747113 },
+       venueId: "52307eec11d20269e1c41015"
+     },
+     {
+       title: "Get your mug",
+       location: { lat: 50.639573, lng: 5.573682 },
+       venueId: "539d9ad6498ef1b1c9cfa042"
+     },
+     {
+       title: "Cathédrale Saint-Paul",
+       location: { lat: 50.6404139, lng: 5.5715023 },
+       venueId: "50390d3fe4b092ff12bc9860"
+     },
+     {
+       title: "Le Palais des Princes-Évêques",
+       location: { lat: 50.645729, lng: 5.5729943 },
+       venueId: "4c6d7005d5c3a1cd4b77c52b"
+     },
+     {
+       title: "Le Pot au Lait",
+       location: { lat: 50.6404783, lng: 5.5733067 },
+       venueId: "4b981cbcf964a520382d35e3"
+     },
+     {
+       title: "Cinéma Churchill",
+       location: { lat: 50.6411672, lng: 5.5703101 },
+       venueId: "4b9bb361f964a520831b36e3"
+     }
+   ]
+
+   // Creating a variable for the information window
+    var largeInfowindow = new google.maps.InfoWindow()
+
+   // Choosing the icon design
+   var defaultIcon =this.makeMarkerIcon("0091ff")
+   // Choosing the icon desing when hover
+   var highlightedIcon = this.makeMarkerIcon("FFFF24")
+
+   // Creates an array of maakers with my locations
+   for (var i = 0; i < locations.length; i++) {
+     var position = locations[i].location
+     var title = locations[i].title
+
+     var marker = new google.maps.Marker({
+       position: position,
+       title: title,
+       map: this.map,
+       animation: google.maps.Animation.DROP,
+       icon: defaultIcon,
+       id: i
+     })
+     // test
+
+     //var {markers} = this.state
+
+     markers.push(marker)
+
+     marker.addListener("click", function() {
+       this.populateInfoWindow(this, largeInfowindow)
+     })
+
+     marker.addListener("mouseover", function() {
+       this.setIcon(highlightedIcon)
+     })
+     marker.addListener("mouseout", function() {
+       this.setIcon(defaultIcon)
+     })
+   }
+
+  for (var ih = 0; ih < markers.length; ih++) {
+    markers[ih].setMap(this.map)
+    bounds.extend(markers[ih].position)
   }
+
+  document
+    .getElementById("hide-listings")
+    .addEventListener("click", () => {
+      this.hideMarkers(markers, this.currentMarkers)
+    })
+
   this.map.fitBounds(bounds)
 }
 
@@ -512,7 +604,7 @@ initMap() {
         address: address,
         componentRestrictions: { locality: "New York" }
       },
-      function(results, status) {
+      (results, status) => {
         if (status === google.maps.GeocoderStatus.OK) {
           this.map.setCenter(results[0].geometry.location)
           this.map.setZoom(15)
@@ -529,7 +621,7 @@ initMap() {
 
 render() {
     return (
-<BrowserRouter>
+//<BrowserRouter>
    <div className="app">
       <div className="title-container">
          <div className="hamburger-box">
@@ -566,7 +658,7 @@ render() {
 
       </div>
       </div>
-      </BrowserRouter>
+      //</BrowserRouter>
     )
   }
 }
