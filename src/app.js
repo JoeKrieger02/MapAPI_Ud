@@ -14,8 +14,6 @@ class App extends React.Component {
 
 )}}
 
-//export default App
-
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBD14b8LrFS-VzQBzSzEgSZcaq1NhCu7Do'
 })(App)
