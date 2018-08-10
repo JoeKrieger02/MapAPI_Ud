@@ -314,19 +314,28 @@ initMap() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(this.map)
     bounds.extend(markers[i].position)
+    currentMarkers.push(markers[i])
   }
 
   this.map.fitBounds(bounds)
-
+/*
   // push every markers in the second array
   for (var id = 0; id < markers.length; id++) {
-
     currentMarkers.push(markers[id])
   }
+*/
+
+  console.log(currentMarkers)
 
   marker.addListener("click", function() {
     this.populateInfoWindow(this, largeInfowindow)
   })
+  
+  document
+    .getElementById("hide-listings")
+    .addEventListener("click", () => {
+      this.hideMarkers(markers, currentMarkers)
+    })
 
   marker.addListener("mouseover", function() {
     this.setIcon(highlightedIcon)
@@ -473,6 +482,7 @@ initMap() {
    //const {google} = this.props
    const {markers} = this.state
    const bounds = new google.maps.LatLngBounds()
+   var currentMarkers=[]
 
    var locations = [
      {
@@ -549,12 +559,14 @@ initMap() {
   for (var ih = 0; ih < markers.length; ih++) {
     markers[ih].setMap(this.map)
     bounds.extend(markers[ih].position)
+    currentMarkers.push(markers[ih])
   }
+
 
   document
     .getElementById("hide-listings")
     .addEventListener("click", () => {
-      this.hideMarkers(markers, this.currentMarkers)
+      this.hideMarkers(markers, currentMarkers)
     })
 
   this.map.fitBounds(bounds)
@@ -565,9 +577,10 @@ initMap() {
   for (var it = 0; it < markers.length; it++) {
     markers[it].setMap(null)
   }
+console.log("before "+currentMarkers)
   for (var is = 0; is < currentMarkers.length; is++) {
     currentMarkers[is].setMap(null)
-  }
+  }console.log("after " + currentMarkers)
   for (var ix = 1; ix < 7; ix++) {
     document.getElementById("l" + ix).style.display = "inline-block"
   }
@@ -659,6 +672,7 @@ render() {
       </div>
       </div>
       //</BrowserRouter>
+
     )
   }
 }
