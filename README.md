@@ -1,8 +1,9 @@
-# Krieger Maps
+# Krieger Maps - React Project
 
 
 ## How to use ?
-* Open "index.html" in you favorite browser
+* Download all decencies and launch server with "npm start"
+* navigate to "localhost:3000" with your favorite browser
 
 ## What can it do ?
 * Zoom near your desired location with the top search bar
@@ -13,4 +14,4 @@
 
 ## CREDITS
 * "License.txt" is for the Udacity course on Google Maps API's that I followed in order to complete this project. (Udacity: https://www.udacity.com/course/google-maps-apis--ud864 , GitHub: https://github.com/udacity/ud864)
-* "App.js" fecth function (line 308) is from Udacity Neighborhood Map Chat with student Mason W. and mentor Manish B.
+* Map.js" fecth function (line 283) is from Udacity Neighborhood Map Chat with student Mason W. and mentor Manish B.

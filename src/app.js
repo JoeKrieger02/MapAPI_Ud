@@ -4,7 +4,6 @@ import Map from "./map.js"
 import { GoogleApiWrapper } from 'google-maps-react'
 
 
-
 class App extends React.Component {
    render() {
     return (
